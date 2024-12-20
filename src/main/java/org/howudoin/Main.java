@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Main {
 
     public static void main(String[] args) {
+        JwtHelper jwtHelper = new JwtHelper();
+        String token = jwtHelper.generateToken("myUsername");
+        System.out.println("Generated JWT Token: " + token);
         SpringApplication.run(Main.class, args);
     }
 
