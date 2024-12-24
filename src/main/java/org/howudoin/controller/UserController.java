@@ -28,15 +28,20 @@ public class UserController {
     public String loginUser(@RequestBody User loginRequest){
         //return userService.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
         // Validate the user credentials (email & password)
+
+
         UserDetails userDetails = userService.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
 
-        if (userDetails != null) {
+        /*if (userDetails != null) {
             // Generate the JWT token
             String jwtToken = jwtHelperUtils.generateToken(userDetails);
             return jwtToken; // Return the token
         } else {
             throw new RuntimeException("Invalid credentials");
-        }
+        }*/
+
+        String jwtToken = jwtHelperUtils.generateToken(userDetails);
+        return jwtToken;
     }
 
     @PostMapping("/friends/add")

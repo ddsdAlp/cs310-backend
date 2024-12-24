@@ -29,11 +29,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, IOException {
         // JWT authentication filter logic
-        /*String username = request.ge;
-        UserDetails user = userDetailsService.loadUserByUsername(username);
-        user.getPassword();
 
-        filterChain.doFilter(request,response);*/
+
 
             // Step 1: Extract the JWT token from the Authorization header
             String header = request.getHeader("Authorization");
