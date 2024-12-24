@@ -23,8 +23,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests()
-                .requestMatchers("/account/create", "/auth/login").permitAll()
-                .requestMatchers("/account/**").authenticated()
+                .requestMatchers("/user/create", "/auth/login","/user/register","/user/login").permitAll()
+                .requestMatchers("/user/**","/protected-resources").authenticated()
                 .anyRequest().authenticated()
                 .and().exceptionHandling(ex -> ex.authenticationEntryPoint(authEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

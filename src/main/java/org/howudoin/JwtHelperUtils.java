@@ -23,7 +23,7 @@ public class JwtHelperUtils {
 
     private SecretKey secret = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
-    public String getUsernameFromToken(String token) {
+    public  String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
@@ -59,7 +59,7 @@ public class JwtHelperUtils {
     }
 
     //validate token
-    public Boolean validateToken(String token, UserDetails userDetails) {
+    public  Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
