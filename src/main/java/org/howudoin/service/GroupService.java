@@ -7,6 +7,7 @@ import org.howudoin.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class GroupService {
 
         Group group = new Group();
         group.setGroupName(groupName);
+        group.setCreationDate(LocalDateTime.now());
 
         //Add emails to the group members list
         for(String email: emailList){
@@ -64,7 +66,7 @@ public class GroupService {
         User user = userRepository.findByEmail(senderEmail);
         Group group = groupRepository.findByGroupName(groupName);
 
-        group.getMessageHistory().add(user.getName()+": "+message);
+        group.getMessageHistory().add(user.getEmail()+":"+message);
 
         groupRepository.save(group);
 
@@ -75,6 +77,17 @@ public class GroupService {
     public List<String> seeAllGroupMessages(String groupName){
         Group group = groupRepository.findByGroupName(groupName);
 
+        if(group == null){
+            List<String > temp = new ArrayList<>();
+            temp.add("no messages");
+            return temp;
+        }
+        else if(group.getMessageHistory().isEmpty()){
+            List<String > temp = new ArrayList<>();
+            temp.add("no messages");
+            return temp;
+        }
+
         return group.getMessageHistory();
     }
 
@@ -83,6 +96,12 @@ public class GroupService {
         Group group = groupRepository.findByGroupName(groupName);
 
         return group.getMembers();
+    }
+
+    public LocalDateTime seeGroupDate(String groupName){
+        Group group = groupRepository.findByGroupName(groupName);
+
+        return group.getCreationDate();
     }
 
     //view all groups a member if part of

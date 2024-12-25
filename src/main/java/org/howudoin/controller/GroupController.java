@@ -4,6 +4,8 @@ import org.howudoin.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -38,15 +40,22 @@ public class GroupController {
     }
 
     @GetMapping("/groups/{groupId}/members")
-    @CrossOrigin(origins = "http://localhost:8081")
+    @CrossOrigin(origins = "*")
     public List<String> showAllMembers(@PathVariable String groupId){
         return groupService.seeAllGroupMembers(groupId);
     }
 
+    @GetMapping("/groups/{groupId}/date")
+    @CrossOrigin(origins = "*")
+    public LocalDateTime showDate(@PathVariable String groupId){
+        return groupService.seeGroupDate(groupId);
+    }
+
     @GetMapping("/groups")
-    @CrossOrigin(origins = "http://localhost:8081")
+    @CrossOrigin(origins = "*")
     public List<String> showGroups(@RequestParam String email){
         return groupService.showGroups(email);
     }
+
 
 }
