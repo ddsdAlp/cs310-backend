@@ -42,14 +42,16 @@ public class MessageService {
             if(newMessage == null){
                 newMessage = new Message();
 
+                String formattedMessage = senderEmail + ":" + message;
                 newMessage.setSenderEmail(senderEmail);
                 newMessage.setReceiverEmail(receiverEmail);
-                newMessage.setMessageHistory(message);
+                newMessage.setMessageHistory(formattedMessage);
             }
             else{
+                String formattedMessage = senderEmail + ":" + message;
                 newMessage.setSenderEmail(senderEmail);
                 newMessage.setReceiverEmail(receiverEmail);
-                newMessage.setMessageHistory(message);
+                newMessage.setMessageHistory(formattedMessage);
             }
 
             messageRepository.save(newMessage);
@@ -66,6 +68,11 @@ public class MessageService {
         emails.add(receiverEmail);
         Message message = messageRepository.findBySenderEmailInAndReceiverEmailIn(emails, emails);
 
+        if(message == null){
+            List<String > temp = new ArrayList<>();
+            temp.add("no messages");
+            return temp;
+        }
 
         return message.getMessageHistory();
 

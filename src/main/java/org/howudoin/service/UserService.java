@@ -3,10 +3,8 @@ package org.howudoin.service;
 import org.howudoin.model.User;
 import org.howudoin.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,25 +25,22 @@ public class UserService {
     }
 
     //should check if email exists
-    /*public User loginUser(String email, String password){
+    public User loginUser(String email, String password){
+
         User user = userRepository.findByEmail(email);
-        if(!password.matches(user.getPassword())){
-            throw new RuntimeException("Invalid password");
+
+        if (user == null) {
+            throw new RuntimeException("User does not exist");
+        }
+        else{
+            if(!password.matches(user.getPassword())){
+                throw new RuntimeException("Invalid password");
+            }
         }
 
         return user;
-    }*/
-    public UserDetails loginUser(String email, String password) {
-        // Fetch user from database
-        User user = userRepository.findByEmail(email);
-
-        // Validate user credentials (you can add password validation logic here)
-        if (user != null && user.getPassword().equals(password)) {
-            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
-        } else {
-            return null; // Invalid credentials
-        }
     }
+
     public List<User> showAllUsers(){
         return userRepository.findAll();
     }
@@ -107,6 +102,16 @@ public class UserService {
         User user = userRepository.findByEmail(email);
 
         return user.getFriends();
+    }
+
+    public List<String> showFriendRequests(String email){
+        if (userRepository.findByEmail(email) == null) {
+            throw new RuntimeException("Can't find email");
+        }
+
+        User user = userRepository.findByEmail(email);
+
+        return user.getFriendRequests();
     }
 
 }

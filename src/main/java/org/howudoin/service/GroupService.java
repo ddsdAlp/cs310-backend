@@ -7,6 +7,7 @@ import org.howudoin.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -82,5 +83,19 @@ public class GroupService {
         Group group = groupRepository.findByGroupName(groupName);
 
         return group.getMembers();
+    }
+
+    //view all groups a member if part of
+    public List<String> showGroups(String email){
+        List<Group> groups = groupRepository.findAll();
+        List<String> userGroups = new ArrayList<>();
+
+        for(Group group: groups){
+            if(group.getMembers().contains(email)){
+                userGroups.add(group.getGroupName());
+            }
+        }
+
+        return userGroups;
     }
 }
