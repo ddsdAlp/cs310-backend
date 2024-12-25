@@ -26,9 +26,16 @@ public class UserService {
 
     //should check if email exists
     public User loginUser(String email, String password){
+
         User user = userRepository.findByEmail(email);
-        if(!password.matches(user.getPassword())){
-            throw new RuntimeException("Invalid password");
+
+        if (user == null) {
+            throw new RuntimeException("User does not exist");
+        }
+        else{
+            if(!password.matches(user.getPassword())){
+                throw new RuntimeException("Invalid password");
+            }
         }
 
         return user;
@@ -95,6 +102,16 @@ public class UserService {
         User user = userRepository.findByEmail(email);
 
         return user.getFriends();
+    }
+
+    public List<String> showFriendRequests(String email){
+        if (userRepository.findByEmail(email) == null) {
+            throw new RuntimeException("Can't find email");
+        }
+
+        User user = userRepository.findByEmail(email);
+
+        return user.getFriendRequests();
     }
 
 }
