@@ -4,14 +4,7 @@ import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
-@Document(collection = "users")
-@Data
 public class User {
 
     @Id
@@ -20,8 +13,6 @@ public class User {
     private String lastName = "lastname";
     private String email = "email";
     private String password = "password";
-    @CreatedDate
-    private LocalDate createdDate;
 
     private List<String> friends = new ArrayList<>(); // List of user Emails who are friends of this user
     private List<String> friendRequests = new ArrayList<>();; //List of user Emails who have sent a friend request to user
